@@ -2,9 +2,14 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Html.App exposing (beginnerProgram)
+import Json.Decode
 
 main =
-    beginnerProgram { model = model, view = view, update = update}
+    beginnerProgram 
+        { model = model
+        , view = view
+        , update = update
+        }
 
 -- Model
 
@@ -15,7 +20,7 @@ model =
     }
 
 -- Update
-type Msg = AddBean | InputBean String
+type Msg = AddBean | InputBean String | Nothing
 
 update msg model = 
     case msg of
@@ -23,6 +28,8 @@ update msg model =
             addBean model.inputBean model
         InputBean bean ->
             { model | inputBean = bean }
+        Nothing ->
+            model
 
 addBean bean model = 
     case bean of
@@ -34,6 +41,8 @@ addBean bean model =
             }
 
 -- View
+
+(=>) = (,)
 
 view model = 
     div [beanStyle]
@@ -55,7 +64,7 @@ beanUl model =
     let 
         beans = List.map beanItem model.beans
     in
-        ul [style [("list-style-type", "none")]]
+        ul [style ["list-style-type" => "none"]]
         beans
 
 footer =
@@ -66,17 +75,28 @@ addBeanButton =
 
 addBeanInput model =
     input 
-        [ placeholder "Bean Name"
+        [ attribute "autofocus" "bean"
+        , placeholder "Bean Name"
+        , onEnter AddBean
         , onInput InputBean
         , value model.inputBean
         ]
         []
 
+onEnter : Msg -> Attribute Msg
+onEnter msg =
+  let
+    tagger code =
+      if code == 13 then msg else Nothing
+  in
+    on "keydown" (Json.Decode.map tagger keyCode)
+
+
 beanItem name = li [] [text name]
 
 beanStyle = 
     style 
-        [ ("text-align", "center")
-        , ("font-family", "sans-serif") 
+        [ "text-align" => "center"
+        , "font-family" => "sans-serif" 
         ]
 
