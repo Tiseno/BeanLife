@@ -35,6 +35,8 @@ addBean bean model =
 
 -- View
 
+(=>) = (,)
+
 view model = 
     div [beanStyle]
     [ header
@@ -55,7 +57,7 @@ beanUl model =
     let 
         beans = List.map beanItem model.beans
     in
-        ul [style [("list-style-type", "none")]]
+        ul [style ["list-style-type" => "none"]]
         beans
 
 footer =
@@ -76,7 +78,7 @@ beanItem name = li [] [text name]
 
 beanStyle = 
     style 
-        [ ("text-align", "center")
-        , ("font-family", "sans-serif") 
+        [ "text-align" => "center"
+        , "font-family" => "sans-serif" 
         ]
 
