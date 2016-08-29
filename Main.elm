@@ -2,6 +2,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Html.App exposing (beginnerProgram)
+import Json.Decode
 
 main =
     beginnerProgram 
@@ -19,7 +20,7 @@ model =
     }
 
 -- Update
-type Msg = AddBean | InputBean String
+type Msg = AddBean | InputBean String | Nothing
 
 update msg model = 
     case msg of
@@ -27,6 +28,8 @@ update msg model =
             addBean model.inputBean model
         InputBean bean ->
             { model | inputBean = bean }
+        Nothing ->
+            model
 
 addBean bean model = 
     case bean of
@@ -72,11 +75,22 @@ addBeanButton =
 
 addBeanInput model =
     input 
-        [ placeholder "Bean Name"
+        [ attribute "autofocus" "bean"
+        , placeholder "Bean Name"
+        , onEnter AddBean
         , onInput InputBean
         , value model.inputBean
         ]
         []
+
+onEnter : Msg -> Attribute Msg
+onEnter msg =
+  let
+    tagger code =
+      if code == 13 then msg else Nothing
+  in
+    on "keydown" (Json.Decode.map tagger keyCode)
+
 
 beanItem name = li [] [text name]
 
