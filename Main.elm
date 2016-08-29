@@ -4,7 +4,11 @@ import Html.Events exposing (..)
 import Html.App exposing (beginnerProgram)
 
 main =
-    beginnerProgram { model = model, view = view, update = update}
+    beginnerProgram 
+        { model = model
+        , view = view
+        , update = update
+        }
 
 -- Model
 
