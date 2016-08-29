@@ -7868,12 +7868,6 @@ var _elm_lang$html$Html_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
 	});
-var _tiseno$beanlife$Main$beanStyle = _elm_lang$html$Html_Attributes$style(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			{ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
-			{ctor: '_Tuple2', _0: 'font-family', _1: 'sans-serif'}
-		]));
 var _tiseno$beanlife$Main$beanItem = function (name) {
 	return A2(
 		_elm_lang$html$Html$li,
@@ -7883,20 +7877,6 @@ var _tiseno$beanlife$Main$beanItem = function (name) {
 			[
 				_elm_lang$html$Html$text(name)
 			]));
-};
-var _tiseno$beanlife$Main$beanUl = function (model) {
-	var beans = A2(_elm_lang$core$List$map, _tiseno$beanlife$Main$beanItem, model.beans);
-	return A2(
-		_elm_lang$html$Html$ul,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$style(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						{ctor: '_Tuple2', _0: 'list-style-type', _1: 'none'}
-					]))
-			]),
-		beans);
 };
 var _tiseno$beanlife$Main$importantQuestionHeader = A2(
 	_elm_lang$html$Html$h2,
@@ -7913,6 +7893,31 @@ var _tiseno$beanlife$Main$header = A2(
 	_elm_lang$core$Native_List.fromArray(
 		[
 			_elm_lang$html$Html$text('All the known beans:')
+		]));
+var _tiseno$beanlife$Main_ops = _tiseno$beanlife$Main_ops || {};
+_tiseno$beanlife$Main_ops['=>'] = F2(
+	function (v0, v1) {
+		return {ctor: '_Tuple2', _0: v0, _1: v1};
+	});
+var _tiseno$beanlife$Main$beanUl = function (model) {
+	var beans = A2(_elm_lang$core$List$map, _tiseno$beanlife$Main$beanItem, model.beans);
+	return A2(
+		_elm_lang$html$Html$ul,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$style(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_tiseno$beanlife$Main_ops['=>'], 'list-style-type', 'none')
+					]))
+			]),
+		beans);
+};
+var _tiseno$beanlife$Main$beanStyle = _elm_lang$html$Html_Attributes$style(
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(_tiseno$beanlife$Main_ops['=>'], 'text-align', 'center'),
+			A2(_tiseno$beanlife$Main_ops['=>'], 'font-family', 'sans-serif')
 		]));
 var _tiseno$beanlife$Main$addBean = F2(
 	function (bean, model) {
@@ -7931,12 +7936,15 @@ var _tiseno$beanlife$Main$addBean = F2(
 var _tiseno$beanlife$Main$update = F2(
 	function (msg, model) {
 		var _p1 = msg;
-		if (_p1.ctor === 'AddBean') {
-			return A2(_tiseno$beanlife$Main$addBean, model.inputBean, model);
-		} else {
-			return _elm_lang$core$Native_Utils.update(
-				model,
-				{inputBean: _p1._0});
+		switch (_p1.ctor) {
+			case 'AddBean':
+				return A2(_tiseno$beanlife$Main$addBean, model.inputBean, model);
+			case 'InputBean':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{inputBean: _p1._0});
+			default:
+				return model;
 		}
 	});
 var _tiseno$beanlife$Main$model = {
@@ -7953,20 +7961,18 @@ var _tiseno$beanlife$Main$footer = A2(
 		[
 			_elm_lang$html$Html$text(_tiseno$beanlife$Main$model.csn)
 		]));
+var _tiseno$beanlife$Main$Nothing = {ctor: 'Nothing'};
+var _tiseno$beanlife$Main$onEnter = function (msg) {
+	var tagger = function (code) {
+		return _elm_lang$core$Native_Utils.eq(code, 13) ? msg : _tiseno$beanlife$Main$Nothing;
+	};
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'keydown',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$keyCode));
+};
 var _tiseno$beanlife$Main$InputBean = function (a) {
 	return {ctor: 'InputBean', _0: a};
-};
-var _tiseno$beanlife$Main$addBeanInput = function (model) {
-	return A2(
-		_elm_lang$html$Html$input,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$placeholder('Bean Name'),
-				_elm_lang$html$Html_Events$onInput(_tiseno$beanlife$Main$InputBean),
-				_elm_lang$html$Html_Attributes$value(model.inputBean)
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[]));
 };
 var _tiseno$beanlife$Main$AddBean = {ctor: 'AddBean'};
 var _tiseno$beanlife$Main$addBeanButton = A2(
@@ -7979,6 +7985,20 @@ var _tiseno$beanlife$Main$addBeanButton = A2(
 		[
 			_elm_lang$html$Html$text('Add Bean!')
 		]));
+var _tiseno$beanlife$Main$addBeanInput = function (model) {
+	return A2(
+		_elm_lang$html$Html$input,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(_elm_lang$html$Html_Attributes$attribute, 'autofocus', 'bean'),
+				_elm_lang$html$Html_Attributes$placeholder('Bean Name'),
+				_tiseno$beanlife$Main$onEnter(_tiseno$beanlife$Main$AddBean),
+				_elm_lang$html$Html_Events$onInput(_tiseno$beanlife$Main$InputBean),
+				_elm_lang$html$Html_Attributes$value(model.inputBean)
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
 var _tiseno$beanlife$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
