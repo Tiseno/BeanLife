@@ -20,3 +20,5 @@ Deploying:
 The life of a bean is the life for me.
 
 For every bean there is an equal and opposite bean.
+
+To bean or not to bean. That is the question.
