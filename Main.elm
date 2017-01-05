@@ -14,7 +14,7 @@ main =
 -- Model
 
 model =
-    { beans = ["Lima", "Kidney", "Soy"]
+    { beans = ["Lima", "Kidney", "Soy", "Jelly", "Kidney"]
     , csn = "csn då"
     , inputBean = ""
     }
