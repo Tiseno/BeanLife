@@ -10,11 +10,7 @@ Running:
 
 Deploying:
 
-1. Checkout gh-pages branch
-2. Pull latest from master
-3. Run `make`
-4. Run `git add -f index.html`
-5. Commit and push to gh-pages
+1. `make deploy`
 
 ## Words of Wisdom
 The life of a bean is the life for me.
