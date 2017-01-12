@@ -16,10 +16,6 @@
 (defn bean-stats []
   [:p "Scientists currently estimate that there are " (count @all-beans) " beans in the world"])
 
-(defn inc-button []
-  [:input {:type "button" :value "Discover New Bean"
-           :on-click discover-bean!}])
-
 (defn bean-list []
   [:ul
    (for [bean @all-beans]
@@ -43,9 +39,9 @@
    [:h2 "Welcome to the Bean Life"]
    [:p [:strong "The #1 site for bean-related news"]]
    [bean-stats]
-   [inc-button]
    [:p "Know of any other beans?"]
    [bean-input]
+   [:p "All known beans:"]
    [bean-list]
    [snackbar]])
 
