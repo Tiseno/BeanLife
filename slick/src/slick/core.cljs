@@ -3,10 +3,10 @@
 
 ;; -------------------------
 ;; State
-(def all-beans (r/atom [1 2 3]))
+(def all-beans (r/atom ["Pita" "Lima"]))
 
-(defn discover-bean! []
-  (swap! all-beans conj (inc (last @all-beans))))
+(defn discover-bean! [b]
+  (swap! all-beans conj b))
 
 (defn forget-bean! []
   (swap! all-beans butlast @all-beans))
@@ -23,23 +23,29 @@
 (defn bean-list []
   [:ul
    (for [bean @all-beans]
-     ^{:key bean} [:li "Bean " bean])]) 
+     [:li bean])]) 
+
+(def ENTER 13)
+(defn bean-input []
+  [:input {:on-key-press #(when (= ENTER (.-charCode %))
+                            (discover-bean! (-> % .-target .-value)))}]) 
 
 (defn snackbar []
   (let [classes (str "snackbar" (when (> (count @all-beans) 3) " slide-in"))]
     [:div {:class classes} 
      [:p {:class "message"}
-      "Allahu Snackbar!"]
+      "Snackbar!"]
      [:p {:class "action" :on-click forget-bean!}
       "Forget"]]))
 
 (defn home-page []
   [:div 
-   [:h2 "Welcome to Bean Life"]
+   [:h2 "Welcome to the Bean Life"]
    [:p [:strong "The #1 site for bean-related news"]]
    [bean-stats]
    [inc-button]
    [:p "Know of any other beans?"]
+   [bean-input]
    [bean-list]
    [snackbar]])
 
