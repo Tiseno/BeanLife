@@ -76,6 +76,8 @@ a:hover {
 
 .snackbar .action {
   color: #F44336;
+  cursor: pointer;
+  user-select: none;
 }
 
 .snackbar p {
