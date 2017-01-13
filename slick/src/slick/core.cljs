@@ -9,7 +9,7 @@
   (swap! all-beans conj b))
 
 (defn forget-bean! []
-  (swap! all-beans butlast @all-beans))
+  (swap! all-beans butlast))
 
 ;; -------------------------
 ;; Views
@@ -17,7 +17,7 @@
   [:p "Scientists currently estimate that there are " (count @all-beans) " beans in the world"])
 
 (defn bean-list []
-  [:ul
+  [:ul {:class "bean-list"}
    (for [bean @all-beans]
      [:li bean])]) 
 
@@ -27,7 +27,7 @@
                             (discover-bean! (-> % .-target .-value)))}]) 
 
 (defn snackbar []
-  (let [classes (str "snackbar" (when (> (count @all-beans) 3) " slide-in"))]
+  (let [classes (str "snackbar" (when (> (count @all-beans) 2) " slide-in"))]
     [:div {:class classes} 
      [:p {:class "message"}
       "Snackbar!"]

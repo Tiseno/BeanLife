@@ -63,6 +63,13 @@ a:hover {
   }
 }
 
+.bean-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 200px;
+}
+
 .snackbar .message {
   flex-grow: 1; 
 }
