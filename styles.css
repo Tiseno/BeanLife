@@ -1,0 +1,188 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+#map {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.map-wrapper {
+  height: 100%;
+  position: relative;
+}
+
+.map-controls, .marker-factory, .clear-markers {
+  position: absolute;
+  z-index: 99;
+  padding: 30px;
+  font-size: 20px;
+  color: white;
+  background-color: rgba(20, 20, 20, 0.8);
+  text-align: center;
+}
+
+.map-controls, .marker-factory {
+  bottom: 0;
+}
+
+.marker-factory {
+  padding-right: 0;
+  right: 0;
+}
+
+.clear-markers {
+  top: 0;
+  right: 0;
+}
+
+.map-control {
+  display: block;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.1s ease-in-out;
+}
+
+.splash {
+  height: 100%;
+  width: 100%;
+  background-color: pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash h1 {
+  animation: spin 1s infinite;
+}
+
+@keyframes spin {
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+.active, .map-control:hover {
+  background-color: rgba(229, 0, 0, 0.5)
+}
+
+.slanted {
+  font-style: italic;
+}
+
+input[type=range]{
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  height: 3px;
+  background: #666;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: rgb(170, 10, 10);
+  margin-top: -6px;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+.map-marker {
+  height: 20px;
+  width: 40px;
+}
+
+.marker-0 {
+  animation: marker-0-frames 500ms forwards ease-in-out;
+}
+
+@keyframes marker-0-frames {
+  0% {
+    opacity: 0.6;
+    transform: translateX(45px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.marker-1 {
+  animation: marker-1-frames 500ms forwards ease-in-out;
+}
+
+@keyframes marker-1-frames {
+  0% {
+    opacity: 0.4;
+    transform: translateX(45px);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translateX(0);
+  }
+}
+
+.marker-2 {
+  animation: marker-2-frames 500ms forwards ease-in-out;
+}
+
+@keyframes marker-2-frames {
+  0% {
+    opacity: 0.2;
+    transform: translateX(45px);
+  }
+  100% {
+    opacity: 0.4;
+    transform: translateX(0);
+  }
+}
+
+.marker-3 {
+  animation: marker-3-frames 500ms forwards ease-in-out;
+}
+
+@keyframes marker-3-frames {
+  0% {
+    opacity: 0;
+    transform: translateX(45px);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(0px);
+  }
+}
+
+.map-marker {
+  transform: translateX(45px);
+}
+
+@keyframes slide-queue {
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.dragging {
+  opacity: 0;
+}
+
+img {
+  height: 20px;
+  width: 40px;
+}
+
