@@ -14,7 +14,9 @@
       "density": 4.0
     }
   ],
+  "background_color": "#FFC0CB",
+  "theme_color": "#2F2F2F",
   "start_url": "index.html",
   "display": "standalone",
-  "orientation": "landscape"
+  "orientation": "portrait"
 }

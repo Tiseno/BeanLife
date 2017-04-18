@@ -17,6 +17,7 @@ function initMap() {
   }, 200)
 
   // Get UI elements
+  var goFish = getElement('go-fishing')
   var tilt = getElement('tilt')
   var zoom = getElement('zoom')
   var roadmap = getElement('roadmap')
@@ -94,6 +95,12 @@ function initMap() {
   })
   setMapType('roadmap', map)()
 
+  var favoriteFishingSpotLocation = {lat: 59.3318168, lng: 18.0770316}
+  var favoriteFishingSpot = new google.maps.Marker({
+    position: favoriteFishingSpotLocation,
+    map: map,
+  });
+
   // Set up saved markers
   var markerReferences = []
   var savedMarkers = JSON.parse(localStorage.getItem('markers')) || []
@@ -149,6 +156,10 @@ function initMap() {
   onClick(satellite, setMapType('satellite', map))
   onClick(hybrid, setMapType('hybrid', map))
   onClick(terrain, setMapType('terrain', map))
+  onClick(goFish, function() {
+    map.setCenter(favoriteFishingSpotLocation)
+    clearElements(goFish)
+  })
 
   var tilted = false
   onClick(tilt, function() {
@@ -189,12 +200,16 @@ window.onload = function() {
 function setMapType(type, map) {
   return function() {
     map.setMapTypeId(type)
-    var types = ['satellite', 'hybrid', 'terrain', 'roadmap']
-    for (var t of types) {
-      getElement(t).classList.remove('active')
-    }
-    getElement(type).classList.add('active')
+    clearElements(type)
   }
+}
+
+function clearElements(type) {
+  var types = ['satellite', 'hybrid', 'terrain', 'roadmap', 'go-fishing']
+  for (var t of types) {
+    getElement(t).classList.remove('active')
+  }
+  getElement(type).classList.add('active')
 }
 
 function onInput(el, body) {
