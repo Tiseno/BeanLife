@@ -3,31 +3,37 @@
   <head>
     <title>The Best Map</title>
     <meta name="viewport" content="initial-scale=1.0">
+    <meta name="theme-color" content="#2f2f2f">
     <meta charset="utf-8">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/ico" href="icon-small.png"/>
   </head>
   <body>
     <div class="map-wrapper">
+      <img class="map-marker marker-0" id="drag-marker" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="true">
       <div class="splash">
         <p id="stand-by">Stand by</p>
         <h1>Loading the Best Map</h1>
       </div>
       <div id="map">
       </div>
-      <div class="map-controls">
-        <span class="map-control" id="roadmap">roadmap</span>
-        <span class="map-control" id="satellite">satellite</span>
-        <span class="map-control" id="hybrid">hybrid</span>
-        <span class="map-control" id="terrain">terrain</span>
-        <span class="map-control" id="tilt">tilt</span>
-        <input type="range" id="zoom" min="0" max="22">
-      </div>
-      <div class="marker-factory">
-        <div id="marker-container">
-          <img class="map-marker marker-0" id="marker" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="true">
-          <img class="map-marker marker-1" id="marker-2" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
-          <img class="map-marker marker-2" id="marker-3" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
-          <img class="map-marker marker-3" id="marker-4" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
+      <div class="bottom-controls">
+        <div class="map-controls">
+          <span class="map-control" id="roadmap">roadmap</span>
+          <span class="map-control" id="satellite">satellite</span>
+          <span class="map-control" id="hybrid">hybrid</span>
+          <span class="map-control" id="terrain">terrain</span>
+          <span class="map-control" id="tilt">tilt</span>
+          <input type="range" id="zoom" min="0" max="22">
+        </div>
+        <div class="marker-factory">
+          <div id="marker-container">
+            <img class="map-marker marker-0" id="marker" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="true">
+            <img class="map-marker marker-1" id="marker-2" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
+            <img class="map-marker marker-2" id="marker-3" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
+            <img class="map-marker marker-3" id="marker-4" src="http://orlando5.pbworks.com/f/1361545324/animated%20salmon.gif" draggable="false">
+          </div>
         </div>
       </div>
       <div class="clear-markers">
@@ -35,7 +41,7 @@
       </div>
     </div>
     <script src="script.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJaaNkNcCFwreXlG7JlM-DNUO950rd3CA&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
             async defer></script>
   </body>
 </html>

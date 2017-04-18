@@ -28,15 +28,33 @@ function initMap() {
   var markerContainer = getElement('marker-container')
   var clearMarkersButton = getElement('clear-markers-button')
 
-  marker.addEventListener('dragstart', function(p) {
+  function startDraggingFish() {
     marker.classList = ['dragging']
+  }
+  marker.addEventListener('dragstart', startDraggingFish)
+  marker.addEventListener('touchstart', function() {
+    draggingFish.style.visibility = 'hidden'
+    startDraggingFish()
   })
-
+  var draggingFish = getElement('drag-marker');
+  marker.addEventListener('touchmove', function(e) {
+    draggingFish.style.top = (e.targetTouches[0].clientY - 10) + "px"
+    draggingFish.style.left = (e.targetTouches[0].clientX - 20) + "px"
+    void draggingFish.offsetWidth
+  })
   marker.addEventListener('dragend', function(p) {
+    dropFish(p.clientX, p.clientY)
+  })
+  marker.addEventListener('touchend', function(p) {
+    var touches = p.changedTouches[0]
+    dropFish(touches.clientX, touches.clientY)
+    draggingFish.style.visibility = 'visibility'
+  })
+  function dropFish(clientX, clientY) {
     // Calculate new position
     var screen = getElement('map')
-    var offsetX = (screen.clientWidth - p.clientX)/screen.clientWidth
-    var offsetY = (screen.clientHeight - p.clientY)/screen.clientHeight
+    var offsetX = (screen.clientWidth - clientX)/screen.clientWidth
+    var offsetY = (screen.clientHeight - clientY)/screen.clientHeight
     var minLat = map.getBounds().f.f
     var diffLat = map.getBounds().f.b - minLat
     var minLng = map.getBounds().b.f
@@ -62,7 +80,7 @@ function initMap() {
     // Save marker in local storage
     savedMarkers.push(newPos)
     localStorage.setItem('markers', JSON.stringify(savedMarkers))
-  })
+  }
 
   // Set up the map
   var kth = {lat: 59.3498092, lng: 18.0684758}
@@ -120,22 +138,13 @@ function initMap() {
     markerReferences.push(newMarker)
   }
 
-  onClick(clearMarkersButton, function() {
-    clearMarkers()
-  })
-
   zoom.value = map.getZoom()
   map.addListener('zoom_changed', function() {
     zoom.value = map.getZoom()
   })
 
-  var mousePosition = {lat: 0, lng:0}
-  map.addListener('mousemove', function(e) {
-    mousePosition.lat = e.latLng.lat()
-    mousePosition.lng = e.latLng.lng()
-  })
-
   // Set up the custom UI controls
+  onClick(clearMarkersButton, clearMarkers)
   onClick(roadmap, setMapType('roadmap', map))
   onClick(satellite, setMapType('satellite', map))
   onClick(hybrid, setMapType('hybrid', map))
@@ -150,6 +159,31 @@ function initMap() {
   onInput(zoom, function() {
     map.setZoom(zoom.value - 0)
   })
+}
+
+window.onload = function() {
+  if (navigator.geolocation) {
+    console.log('Attempting to get the user\'s location')
+    setTimeout(function() {
+      var geoSuccess = function(position) {
+        console.log('pos', position)
+        var coords = position.coords
+        var userPos = {lat: coords.latitude, lng: coords.longitude }
+        map.setCenter(userPos)
+      }
+      var geoError = function(error) {
+        console.log('User denied location')
+        switch(error.code) {
+          case error.TIMEOUT:
+            showNudgeBanner()
+            break
+        }
+      }
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError)
+    }, 2000)
+  } else {
+    console.log('geolocation not available')
+  }
 }
 
 function setMapType(type, map) {
