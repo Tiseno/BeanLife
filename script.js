@@ -17,6 +17,10 @@ function initMap() {
   }, 200)
 
   // Get UI elements
+  var up = getElement('up')
+  var down = getElement('down')
+  var left = getElement('left')
+  var right = getElement('right')
   var goFish = getElement('go-fishing')
   var tilt = getElement('tilt')
   var zoom = getElement('zoom')
@@ -156,6 +160,10 @@ function initMap() {
   onClick(satellite, setMapType('satellite', map))
   onClick(hybrid, setMapType('hybrid', map))
   onClick(terrain, setMapType('terrain', map))
+  onClick(up, panBy({x: 0, y: -100}, map))
+  onClick(down, panBy({x: 0, y: 100}, map))
+  onClick(left, panBy({x: -100, y: 0}, map))
+  onClick(right, panBy({x: 100, y: 0}, map))
   onClick(goFish, function() {
     map.setCenter(favoriteFishingSpotLocation)
     clearElements(goFish)
@@ -201,6 +209,12 @@ function setMapType(type, map) {
   return function() {
     map.setMapTypeId(type)
     clearElements(type)
+  }
+}
+
+function panBy(direction, map) {
+  return function() {
+    map.panBy(direction.x, direction.y)
   }
 }
 

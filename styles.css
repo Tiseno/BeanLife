@@ -48,7 +48,6 @@ html, body {
 }
 
 .map-controls {
-  height: 225px;
   width: 100px;
   align-self: flex-end;
   padding: 10px;
